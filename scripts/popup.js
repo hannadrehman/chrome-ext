@@ -1,4 +1,4 @@
-angular.module('nutri',['ngMaterial','ngMessages'])
+var app = angular.module('nutri',['ngMaterial','ngMessages'])
 .controller('nutriCtr',function($scope){
   $scope.a='hannad'
 })

@@ -11,7 +11,12 @@
       <div ng-controller="nutriCtr">
         <p ng-bind="a"></p>
         <input ng-model="a" />
+        <div ng-repeat="item in [1,2,3]">
+          <p>a {{item}}</p>
+          <p>b {{item}}</p>
+        </div>
       </div>
+      <form-a></form-a>
     </div>
     <script src="scripts/angular.min.js"></script>
     <script src="scripts/angular-animate.min.js"></script>
@@ -19,5 +24,6 @@
     <script src="scripts/angular-messages.min.js"></script>
     <script src="scripts/angular-material.min.js"></script>
     <script src="scripts/popup.js"></script>
+    <script src="scripts/unknown.js"></script>
   </body>
 </html>
