@@ -2,6 +2,7 @@
 <html>
   <head>
     <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
     <link rel="stylesheet" href="styles/angular-material.min.css">
@@ -11,16 +12,95 @@
       <div ng-controller="nutriCtr">
         <div ng-cloak>
           <md-content>
-            <md-tabs class="md-primary" md-center-tabs>
-              <md-tab label="Recipe">
+            <md-tabs class="md-primary" md-left-tabs style="height:700px">
+              <md-tab label="Recipe" >
                 <md-content class="md-padding">
-                  <h2 class="md-display-1">Add a new Recipe</h2>
-                  <p class="md-body-1">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue.
-                    Phasellus volutpat neque ac dui mattis vulputate. Etiam consequat aliquam cursus. In
-                    sodales pretium ultrices. Maecenas lectus est, sollicitudin consectetur felis nec,
-                    feugiat ultricies mi.
-                  </p>
+                  <h3 class="md-display-1">Add a new Recipe</h3>
+                  <section ng-if="!mainLoader && !mainError">
+                    <div ng-if="parsedData.matched">
+                      <form name="recipeForm">
+                        <md-input-container class="md-block">
+                            <label>Recipe Name</label>
+                            <input md-maxlength="30" required md-no-asterisk name="recipeName" ng-model="parsedData.recipe_name">
+                            <div ng-messages="recipeForm.recipeName.$error">
+                              <div ng-message="required">This is required.</div>
+                              <div ng-message="md-maxlength">The description must be less than 30 characters long.</div>
+                            </div>
+                          </md-input-container>
+                          <h2>Matched Ingredients</h2>
+                          <table class="table">
+                              <tr>
+                                <th>Name</th>
+                                <th>Quantity</th>
+                                <th>Measure</th>
+                              </tr>
+                              <tr ng-repeat="mat in parsedData.matched">
+                                <td>
+                                    <md-subheader>
+                                        {{mat.matched_food_name}}
+                                    </md-subheader>
+                                    <span class="small-name">Found Name : {{mat.food_name}}</span>
+                                </td>
+                                <td>
+                                  <md-input-container class="md-block" style="width:100px">
+                                      <label>Quantity</label>
+                                      <input required md-no-asterisk name="{{$index}}" ng-model="mat.quantity">
+                                      <div ng-messages="recipeForm[$index].$error">
+                                        <div ng-message="required">This is required.</div>
+                                      </div>
+                                    </md-input-container>
+                                </td>
+                                <td>
+                                  <select name="measure_{{$index}}" 
+                                    id="repeatSelect_{{$index}}" 
+                                    ng-model="mat.selectedMeasure"
+                                    ng-init="mat.selectedMeasure"  
+                                    ng-options="option.id as option.MeasureName for option in mat.measuresAvaiable">          
+                                  </select>
+                                </td>
+                                <td>
+                                    <span class="delete-b" ng-click="delete(mat)">X</span>
+                                </td>
+                              </tr>
+                          </table>
+                        </form>
+                    </div>
+                  </section>
+                  <section ng-if="!mainLoader && !mainError">
+                    <h2>Unmatched Ingredients</h2>
+                    <div ng-if="parsedData.missing" >
+                      <table class="table">
+                        <tr>
+                          <th>Name</th>
+                          <th>Quantity</th>
+                          <th>Measure</th>
+                        </tr>
+                        <tr ng-repeat="unma in parsedData.missing">
+                          <td>
+                              <md-subheader>
+                                  {{unma.food_name}}
+                              </md-subheader>
+                              </td>
+                          <td>
+                              <md-subheader>
+                                  {{unma.quantity}}
+                              </md-subheader>
+                          </td>
+                          <td>
+                              <md-subheader>
+                                  {{unma.measure_name}}
+                              </md-subheader>
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                  </section>
+                  <section ng-if="mainLoader">
+                      <img src="https://www.demilked.com/magazine/wp-content/uploads/2016/06/gif-animations-replace-loading-screen-14.gif" width="100%" />
+                    </section>
+                    <section ng-if="mainError">
+                        <img src="https://weirdomatic.com/wp-content/pictures/2009/12/funny-500-error.gif" width="100%" />
+                  </section>
                 </md-content>
               </md-tab>
               <md-tab label="Custom Ingredient">

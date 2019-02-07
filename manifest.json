@@ -3,7 +3,14 @@
   "version": "1.0",
   "description": "Fail Army",
   "manifest_version": 2,
-  "permissions": ["declarativeContent", "storage"],
+  "permissions": [
+    "http://localhost/*",
+    "http://172.16.6.26/*",
+    "https://*/",
+    "declarativeContent", 
+    "storage",
+    "tabs"
+  ],
   "background": {
     "scripts": ["scripts/background.js"],
     "persistent": false

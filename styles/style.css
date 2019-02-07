@@ -2,3 +2,34 @@ body {
   width: 500px;
   height: 700px;
 }
+
+.table {
+  width: 100%;
+  text-align: left;
+}
+md-tabs:not(.md-no-tab-content):not(.md-dynamic-height) {
+  min-height: 1000px;
+}
+.my-lab {
+  font-size: 14px;
+}
+.delete-b {
+  height: 21px;
+  width: 20px;
+  background-color: #F44336;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+th{
+  font-size: 15px;
+}
+.small-name {
+  font-size: 10px;
+  font-weight: 400;
+  padding: 0 18px;
+}

@@ -5,9 +5,13 @@ console.log('content script has loaded')
 
 chrome.runtime.onMessage.addListener(function (msg, sender, response) {
   // First, validate the message's structure
+  console.log('i listented')
   if ((msg.from === 'popup') && (msg.subject === 'search')) {
       const message = msg.message;
-      searchInDom(message);
+      console.log(message);
+      message.forEach(item=>{
+        searchInDom(item);
+      });
     response('hey');
   }
 });
