@@ -1,3 +1,8 @@
+angular.module('nutri',[])
+.controller('nutriCtr',function($scope){
+  $scope.a='hannad'
+})
+
 const button = document.getElementById('search');
 const textField = document.getElementById('searchField');
 let searchTerm = '';

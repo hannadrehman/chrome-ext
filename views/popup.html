@@ -6,7 +6,14 @@
   <body>
     <input  type="text" placeholder="Search web page with" id="searchField" autocomplete="false" />
     <button id="search">Search</button>
-    <script src="scripts/popup.js"></script>
     <link rel="stylesheet" href="styles/style.css">
+    <div ng-app="nutri">
+      <div ng-controller="nutriCtr">
+        <p ng-bind="a"></p>
+        <input ng-model="a" />
+      </div>
+    </div>
+    <script src="scripts/angular.min.js"></script>
+    <script src="scripts/popup.js"></script>
   </body>
 </html>
