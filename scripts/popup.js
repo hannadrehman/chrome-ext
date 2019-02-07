@@ -1,5 +1,5 @@
 const parseApiUrl = 'http://172.16.6.26/scrape';
-const measureUrl = 'http://localhost/nutri/measures';
+const measureUrl = (id)=>`https://nutrilab.in/api/v1/master_food/${id}/measures/?limit=100`;
 const foodSearchUrl = '';
 const postRecipeUrl = '';
 
@@ -46,7 +46,7 @@ var app = angular.module('nutri',['ngMaterial','ngMessages'])
   function getMeasuresForMatched(){
     $scope.parsedData.matched.forEach(item=>{
       $http({
-        url:measureUrl+'?id='+item.food_id,
+        url:measureUrl(item.food_id),
         method:'GET'
       }).then((res)=>{
         item.measuresAvaiable = res.data.objects

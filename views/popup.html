@@ -28,7 +28,7 @@
                             </div>
                           </md-input-container>
                           <h2>Matched Ingredients</h2>
-                          <table class="table">
+                          <table class="table alter--table">
                               <tr>
                                 <th>Name</th>
                                 <th>Quantity</th>
@@ -36,10 +36,10 @@
                               </tr>
                               <tr ng-repeat="mat in parsedData.matched">
                                 <td>
-                                    <md-subheader>
+                                    <md-subheader >
                                         {{mat.matched_food_name}}
                                     </md-subheader>
-                                    <span class="small-name">Found Name : {{mat.food_name}}</span>
+                                    <span class="small-name">Recipe Name : {{mat.food_name}}</span>
                                 </td>
                                 <td>
                                   <md-input-container class="md-block" style="width:100px">
@@ -57,6 +57,8 @@
                                     ng-init="mat.selectedMeasure"  
                                     ng-options="option.id as option.MeasureName for option in mat.measuresAvaiable">          
                                   </select>
+                                  <br />
+                                  <span ng-if="mat.measure_name" class="small-name">{{mat.measure_name}}</span>
                                 </td>
                                 <td>
                                     <span class="delete-b" ng-click="delete(mat)">X</span>
@@ -69,7 +71,7 @@
                   <section ng-if="!mainLoader && !mainError">
                     <h2>Unmatched Ingredients</h2>
                     <div ng-if="parsedData.missing" >
-                      <table class="table">
+                      <table class="table alter--table">
                         <tr>
                           <th>Name</th>
                           <th>Quantity</th>

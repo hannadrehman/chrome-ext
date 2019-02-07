@@ -6,37 +6,81 @@ chrome.runtime.onMessage.addListener(function(msg, sender, response) {
   if (msg.from === "popup" && msg.subject === "search") {
     const message = msg.message;
     console.log(message);
-    message.forEach(item => {
-      searchInDom(item);
-    });
-    highlighTerms(message);
+    const style = $("#dynamicStyle");
+    if (style) {
+      style.remove();
+    }
+    window.className = makeid();
+    const style_n = $("<style/>")
+      .attr("id", "dynamicStyle")
+      .text(
+        `
+        .${className},  .${className} * {
+          background-color: #3f51b5 !important;
+          color:white !important;
+        }
+        `
+      );
+    $("head").append(style_n);
+    highlightIngredients(message);
     response("hey");
   }
 });
 
-function highlighTerms(matchedIngs) {
-  var className = "marked";
-  var style = $("<style/>")
-    .attr("id", "dynamicStyle")
-    .text(
-      `
-    .${className},  .${className} * {
-      background-color: #3f51b5 !important;
-      color:white !important;
-    }
-    `
-    );
-  $("head").append(style);
+function searchInDom(searchTerms) {
+  const nodeTypesIgnored = [
+    "DIV",
+    "ARTICLE",
+    "SECTION",
+    "HEADER",
+    "FOOTER",
+    "IMG",
+    "SCRIPT",
+    "BODY",
+    "HEAD",
+    "UL",
+    "BR",
+    "NAV",
+    "FORM",
+    "INPUT",
+    "svg",
+    "path",
+    "polygon",
+    "MAIN"
+  ];
+  $("*", "body")
+    .addBack()
+    .contents()
+    .filter(function() {
+      const isValid = !nodeTypesIgnored.includes(this.nodeName);
+      return isValid;
+    })
+    .filter(function() {
+      const isValid =
+        !!(this.nodeValue && isInString(this.nodeValue, searchTerms)) ||
+        !!(this.innerText && isInString(this.innerText, searchTerms));
+      return isValid;
+    })
+    .each(function() {
+      var elem = this.nodeValue !== null ? $(this).parent() : $(this);
+      elem.addClass(window.className);
+    });
+}
+
+function highlightIngredients(matchedIngs) {
   var elementsToBeParsed = ["ul", "table"];
   elementsToBeParsed.forEach(el => {
     $(el).each(function() {
       const elm = this;
       matchedIngs.forEach(ings => {
-        if (!$(elm).hasClass("marked")) {
+        if (!$(elm).hasClass(className)) {
           var pattern = new RegExp(ings, "g");
           var newhtml = $(elm)
             .html()
-            .replace(pattern, '<span class="marked">' + ings + "</span>");
+            .replace(
+              pattern,
+              '<span class="' + className + '">' + ings + "</span>"
+            );
           $(elm).html(newhtml);
         }
       });
