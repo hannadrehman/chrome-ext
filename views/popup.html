@@ -6,16 +6,53 @@
   <body>
     <input  type="text" placeholder="Search web page with" id="searchField" autocomplete="false" />
     <button id="search">Search</button>
+    <link rel="stylesheet" href="styles/angular-material.min.css">
     <link rel="stylesheet" href="styles/style.css">
     <link rel="stylesheet" href="styles/form-a.css">
     <div ng-app="nutri">
       <div ng-controller="nutriCtr">
-        <p ng-bind="a"></p>
-        <input ng-model="a" />
-        <div ng-repeat="item in [1,2,3]">
-          <p>a {{item}}</p>
-          <p>b {{item}}</p>
+        <div ng-cloak>
+          <md-content>
+            <md-tabs class="md-primary" md-center-tabs>
+              <md-tab label="one">
+                <md-content class="md-padding">
+                  <h2 class="md-display-1">Tab One</h2>
+                  <p class="md-body-1">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue.
+                    Phasellus volutpat neque ac dui mattis vulputate. Etiam consequat aliquam cursus. In
+                    sodales pretium ultrices. Maecenas lectus est, sollicitudin consectetur felis nec,
+                    feugiat ultricies mi.
+                  </p>
+                </md-content>
+              </md-tab>
+              <md-tab label="two">
+                <md-content class="md-padding">
+                  <h2 class="md-display-1">Tab Two</h2>
+                  <p class="md-body-1">
+                    Morbi viverra, ante vel aliquet tincidunt, leo dolor pharetra quam, at semper massa
+                    orci nec magna. Donec posuere nec sapien sed laoreet. Etiam cursus nunc in
+                    condimentum facilisis. Etiam in tempor tortor. Vivamus faucibus egestas enim,
+                    at convallis diam pulvinar vel. Cras ac orci eget nisi maximus cursus.
+                  </p>
+                </md-content>
+              </md-tab>
+              <md-tab label="three">
+                <md-content class="md-padding">
+                  <h2 class="md-display-1">Tab Three</h2>
+                  <p class="md-body-1">
+                    Integer turpis erat, porttitor vitae mi faucibus, laoreet interdum tellus. Curabitur
+                    posuere molestie dictum. Morbi eget congue risus, quis rhoncus quam. Suspendisse
+                    vitae hendrerit erat, at posuere mi. Cras eu fermentum nunc. Sed id ante eu orci
+                    commodo volutpat non ac est.
+                  </p>
+                </md-content>
+              </md-tab>
+            </md-tabs>
+          </md-content>
         </div>
+        ONE
+        TWO
+        
       </div>
       <form-a></form-a>
     </div>
