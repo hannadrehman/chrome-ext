@@ -1,4 +1,110 @@
-<div>
-  this is unknown
-  {{test}}
+<div layout="column" ng-cloak class="md-inline-form">
+  <md-content layout-gt-sm="row" layout-padding class="ingredient-names-header">
+    <md-subheader class="md-accent">Ingredient Names</md-subheader>
+  </md-content>
+  <md-content layout-gt-sm="row" layout-padding>
+    <div class="ingredient-names-wrap">
+      <md-input-container class="width-50" ng-repeat="n in ingredientNames">
+        <label>Ingredient Name {{ $index + 1 }}</label>
+        <input ng-model="ingredientNames[$index].name" />
+      </md-input-container>
+    </div>
+  </md-content>
+  <md-button class="md-primary md-raised" ng-click="addIngredientNames()"
+    >Add Ingredient Names</md-button
+  >
+  <md-content layout-gt-sm="row" layout-padding class="ingredient-names-header">
+    <md-subheader class="md-secondary"
+      >The weight for which nutrient info is known</md-subheader
+    >
+    <md-input-container>
+      <label>Weight</label>
+      <input ng-model="ingredientNames[$index]" />
+    </md-input-container>
+  </md-content>
+  <md-content layout-gt-sm="row" layout-padding class="ingredient-names-header">
+    <md-subheader class="md-accent">Nutrients</md-subheader>
+  </md-content>
+  <table>
+    <tr class="nutrients-row" ng-repeat="n in nutrientsList">
+      <td>
+        <md-input-container>
+          <label>Nutrient</label>
+          <input ng-model="nutrientsList[$index].nutrient" />
+        </md-input-container>
+      </td>
+      <td>
+        <md-input-container>
+          <label>Units</label>
+          <input ng-model="nutrientsList[$index].units" />
+        </md-input-container>
+      </td>
+      <td>
+        <button class="delete-b" ng-click="removeNutrients($index)">X</button>
+      </td>
+    </tr>
+  </table>
+
+  <md-content>
+    <md-autocomplete
+      ng-disabled="isDisabled"
+      md-no-cache="noCache"
+      md-selected-item="selectedItem"
+      md-search-text-change="searchTextChange(searchText)"
+      md-search-text="searchText"
+      md-selected-item-change="selectedItemChange(item)"
+      md-items="item in querySearch(searchText)"
+      md-item-text="item.name"
+      md-min-length="0"
+      placeholder="Add Nutrients (eg. Energy)"
+      input-aria-labelledby="favoriteStateLabel"
+      input-aria-describedby="autocompleteDetailedDescription"
+    >
+      <md-item-template>
+        <span md-highlight-text="searchText" md-highlight-flags="^i">{{
+          item.name
+        }}</span>
+      </md-item-template>
+      <md-not-found>
+        No states matching "{{ searchText }}" were found.
+        <a ng-click="newState(searchText)">Create a new one!</a>
+      </md-not-found>
+    </md-autocomplete>
+  </md-content>
+  <md-content layout-gt-sm="row" layout-padding class="ingredient-names-header">
+    <md-subheader class="md-accent">Measures</md-subheader>
+  </md-content>
+
+  <table>
+    <tr class="nutrients-row" ng-repeat="n in measuresList track by $index">
+      <td>
+        <md-input-container>
+          <label>Measure Name</label>
+          <input ng-model="measuresList[$index].measure_name" />
+        </md-input-container>
+      </td>
+      <td>
+        <md-input-container>
+          <label>Measure Weight</label>
+          <input ng-model="measuresList[$index].measure_weight" />
+        </md-input-container>
+      </td>
+      <td>
+        <md-input-container>
+          <label>Measure Rank</label>
+          <input ng-model="measuresList[$index].measure_rank" />
+        </md-input-container>
+      </td>
+      <td>
+        <button class="delete-b" ng-click="removeMeasure($index)">X</button>
+      </td>
+    </tr>
+  </table>
+
+  <md-button class="md-primary md-raised" ng-click="addMeasureRow()"
+    >Add Measures</md-button
+  >
+  <md-button class="md-accent md-raised" ng-click="submitIngredient()"
+  >Add Ingredient</md-button
+>
 </div>
