@@ -3,14 +3,6 @@ var app = angular.module('nutri',['ngMaterial','ngMessages'])
   $scope.a='hannad'
 })
 
-const button = document.getElementById('search');
-const textField = document.getElementById('searchField');
-let searchTerm = '';
-button.addEventListener('click',function(){
-  searchTerm = textField.value;
-  sendMessageToContent(searchTerm)
-})
-
 function sendMessageToContent(message){
   chrome.tabs.query({
     active: true,
