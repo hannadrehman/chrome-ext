@@ -1,5 +1,6 @@
 body {
-  width: 500px;
+  width: 700px !important;
+  position: relative !important;
   height: 700px;
 }
 
@@ -31,5 +32,12 @@ th{
 .small-name {
   font-size: 10px;
   font-weight: 400;
-  padding: 0 18px;
+}
+.alter--table .md-subheader .md-subheader-inner{
+  padding-left: 0px;
+}
+select {
+  font-size: 100%;
+  min-width: 100px;
+  max-width: 100px;
 }
