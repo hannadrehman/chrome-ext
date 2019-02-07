@@ -133,7 +133,7 @@ app.directive("formA", function() {
       }
 
       function searchTextChange(text) {
-        // $log.info('Text changed to ' + text);
+        console.log(text);
       }
 
       function selectedItemChange(item) {

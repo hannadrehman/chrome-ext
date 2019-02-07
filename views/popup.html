@@ -66,6 +66,30 @@
                               </tr>
                           </table>
                         </form>
+                        <div>
+                          <md-subheader >
+                            Add Ingredient
+                          </md-subheader>
+                          <md-autocomplete
+                            md-no-cache="noCache"
+                            md-selected-item="selectedItemx"
+                            md-search-text-change="searchTextChangex(searchTextx)"
+                            md-search-text="searchTextx"
+                            md-selected-item-change="selectedItemChangex(selectedItemx)"
+                            md-items="item in searchList"
+                            md-item-text="item.label"
+                            md-min-length="0"
+                            placeholder="Add Ingredient (eg. Milk)"
+                            input-aria-labelledby="favoriteStateLabel"
+                            input-aria-describedby="autocompleteDetailedDescription">
+                            <md-item-template>
+                              <span md-highlight-text="searchTextx" md-highlight-flags="^i">{{item.label}}</span>
+                            </md-item-template>
+                            <md-not-found>
+                              No matching "{{searchTextx}}" were found.
+                            </md-not-found>
+                          </md-autocomplete>
+                      </div>
                     </div>
                   </section>
                   <section ng-if="!mainLoader && !mainError">

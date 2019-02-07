@@ -1,6 +1,7 @@
-const parseApiUrl = 'http://172.16.6.26/scrape';
+// const parseApiUrl = 'http://172.16.6.26/scrape';
+const parseApiUrl = 'http://localhost/nutri/parse';
 const measureUrl = (id)=>`https://nutrilab.in/api/v1/master_food/${id}/measures/?limit=100`;
-const foodSearchUrl = '';
+const foodSearchUrl = (q) => `https://nutrilab.in/api/v1/master_food/ingr_search/?username=akhil%40healthifyme.com&exclude=R&search_term=${q}&api_key=b6b2d0b2fb99ce157f69059566548b0ff770d00e`;
 const postRecipeUrl = '';
 
 var app = angular.module('nutri',['ngMaterial','ngMessages'])
@@ -9,15 +10,27 @@ var app = angular.module('nutri',['ngMaterial','ngMessages'])
   $scope.parsedData = {}
   $scope.mainLoader =  false;
   $scope.mainError = false;
+
+  $scope.selectedItemx = '';
+  $scope.searchTextx = '';
+  $scope.searchList = []
+
   chrome.tabs.getSelected(null,function(tab) {
     $scope.pageUrl= tab.url;
     fetchInitialData();
   });
   $scope.delete = function (item) {
-    console.log(item);
     const itemIndex = $scope.parsedData.matched.findIndex(elem=>item.food_id === elem.food_id)
     $scope.parsedData.matched.splice(itemIndex,1);
   }
+  $scope.searchTextChangex = function (text) {
+    fetchSearch(text);
+  }
+  $scope.selectedItemChangex = function(item){
+    $scope.selectedItemx = item;
+    getMeasureForSearch(item);
+  }
+
   function fetchInitialData(){
     $scope.mainLoader = true;
     $http({
@@ -60,6 +73,43 @@ var app = angular.module('nutri',['ngMaterial','ngMessages'])
         item.measuresAvaiable = []
       })
     })
+  }
+
+  function fetchSearch(text){
+    $http({
+      url: foodSearchUrl(text),
+      method:'GET',
+    }).then(x=>{
+      $scope.searchList = (x.data.search_result);
+      
+    }).catch(x=>{
+      console.log(x);
+    })
+  }
+  function getMeasureForSearch(item){
+    if(item){
+      $http({
+        url:measureUrl(item.id),
+        method:'GET'
+      }).then((res)=>{
+        item.measuresAvaiable = res.data.objects
+        item.selectedMeasure =  null
+        $scope.parsedData.matched.push({
+          food_id: item.id,
+          food_name:item.label,
+          matched_food_name:item.label,
+          selectedMeasure:null,
+          measure_id:null,
+          measure_name:null,
+          measuresAvaiable:item.measuresAvaiable,
+          quantity:0,
+          selectedMeasure:null
+        });
+        $scope.selectedItemx = {};
+      }).catch(e=>{
+        item.measuresAvaiable = []
+      })
+    }
   }
 
 
