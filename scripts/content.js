@@ -9,6 +9,21 @@ chrome.runtime.onMessage.addListener(function (msg, sender, response) {
   if ((msg.from === 'popup') && (msg.subject === 'search')) {
       const message = msg.message;
       console.log(message);
+      const style = $('#dynamicStyle');
+      if(style){
+        style.remove();
+      }
+       window.className = makeid();
+       const style_n = $('<style/>').attr('id','dynamicStyle').text(
+        `
+        .${className},  .${className} * {
+          background-color: #3f51b5 !important;
+          color:white !important;
+        }
+        `
+      )
+      $('head').append(style_n);
+
       message.forEach(item=>{
         searchInDom(item);
       });
@@ -18,7 +33,6 @@ chrome.runtime.onMessage.addListener(function (msg, sender, response) {
 
 function searchInDom(searchTerms){
   const nodeTypesIgnored = ['DIV','ARTICLE','SECTION','HEADER','FOOTER','IMG', 'SCRIPT','BODY', 'HEAD','UL', 'BR', 'NAV','FORM','INPUT' ,'svg','path', 'polygon','MAIN'];
-  const className = makeid();
   $('*', 'body')
   .addBack()
   .contents()
@@ -32,20 +46,11 @@ function searchInDom(searchTerms){
   })
   .each(function(){
       var elem = this.nodeValue !==null ? $(this).parent() : $(this); 
-      elem.addClass(className)
+      elem.addClass(window.className)
   });
   
-  $('#dynamicStyle').remove();
 
-  const style = $('<style/>').attr('id','dynamicStyle').text(
-    `
-    .${className},  .${className} * {
-      background-color: #3f51b5 !important;
-      color:white !important;
-    }
-    `
-  )
-  $('head').append(style);
+  
 
 }
 function isInString(str,term){
