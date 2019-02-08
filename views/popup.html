@@ -28,6 +28,30 @@
                               <div ng-message="md-maxlength">The description must be less than 30 characters long.</div>
                             </div>
                           </md-input-container>
+                          <section>
+                              <table class=".table alter--table">
+                                <tr>
+                                  <td>
+                                    <md-input-container class="md-block" style="width:100px">
+                                      <label>Measure Name</label>
+                                      <input required md-no-asterisk required name="fmMeasure}" ng-model="recipe.measure">
+                                      <div ng-messages="recipeForm.fmMeasure.$error">
+                                        <div ng-message="required">This is required.</div>
+                                      </div>
+                                    </md-input-container>
+                                  </td>
+                                  <td>
+                                    <md-input-container class="md-block" style="width:100px">
+                                        <label>Measure Weight(gms)</label>
+                                        <input required md-no-asterisk required name="fmMeasureWeight}" ng-model="recipe.weight">
+                                        <div ng-messages="recipeForm.fmMeasureWeight.$error">
+                                          <div ng-message="required">This is required.</div>
+                                        </div>
+                                      </md-input-container>
+                                  </td>
+                                </tr>
+                              </table>
+                            </section>
                           <h2>Matched Ingredients</h2>
                           <table class="table alter--table">
                               <tr>
@@ -45,19 +69,14 @@
                                 <td>
                                   <md-input-container class="md-block" style="width:100px">
                                       <label>Quantity</label>
-                                      <input required md-no-asterisk name="{{$index}}" ng-model="mat.quantity">
+                                      <input type="text" required md-no-asterisk name="{{$index}}" ng-model="mat.quantity">
                                       <div ng-messages="recipeForm[$index].$error">
                                         <div ng-message="required">This is required.</div>
                                       </div>
+                                      <span class="small-name sm-mar">found: {{mat.originalQuantity}}</span>
                                     </md-input-container>
                                 </td>
                                 <td>
-                                  <!-- <select name="measure_{{$index}}" 
-                                    id="repeatSelect_{{$index}}" 
-                                    ng-model="mat.selectedMeasure"
-                                    ng-init="mat.selectedMeasure"  
-                                    ng-options="option.id as option.MeasureName for option in mat.measuresAvaiable">          
-                                  </select> -->
                                   <md-input-container>
                                       <label>Measure</label>
                                       <md-select required ng-model="mat.selectedMeasure" name="{{$index}}"">
@@ -69,15 +88,16 @@
                                       <div ng-messages="recipeForm[$index].$error">
                                           <div ng-message="required">This is required.</div>
                                         </div>
+                                      <span ng-if="mat.measure_name" class="small-name">{{mat.measure_name}}</span>
                                   </md-input-container>
                                   <br />
-                                  <span ng-if="mat.measure_name" class="small-name">{{mat.measure_name}}</span>
                                 </td>
                                 <td>
                                     <span class="delete-b" ng-click="delete(mat)">X</span>
                                 </td>
                               </tr>
                           </table>
+                          <md-button ng-disabled="!isFormValid()" class="md-primary md-raised" ng-click="submit()">Submit Food</md-button>
                         </form>
                         <div>
                           <md-subheader >
@@ -98,6 +118,7 @@
                       </div>
                     </div>
                   </section>
+
                   <section ng-if="!mainLoader && !mainError">
                     <h2>Unmatched Ingredients</h2>
                     <div ng-if="parsedData.missing" >

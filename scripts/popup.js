@@ -5,7 +5,7 @@ const parseApiUrl = ip+'api/v1/recipe-builder/scrape/';
 // const parseApiUrl = 'https://add80281.ngrok.io/scrape';
 const measureUrl = (id)=>`${ip}api/v1/master_food/${id}/measures/?limit=100`;
 const foodSearchUrl = (q) => `${ip}api/v1/master_food/ingr_search/?username=akhil%40healthifyme.com&exclude=R&search_term=${q}&api_key=b6b2d0b2fb99ce157f69059566548b0ff770d00e`;
-const postRecipeUrl = '';
+const postRecipeUrl = ip+'api/v1/recipe-builder/recipe/';
 
 var app = angular.module('nutri',['ngMaterial','ngMessages','angucomplete-alt'])
 .controller('nutriCtr',function($scope,$http){
@@ -13,7 +13,10 @@ var app = angular.module('nutri',['ngMaterial','ngMessages','angucomplete-alt'])
   $scope.parsedData = {}
   $scope.mainLoader =  false;
   $scope.mainError = false;
-
+  $scope.recipe = {
+    measure:'Serve',
+    weight:1,
+  }
   chrome.tabs.getSelected(null,function(tab) {
     $scope.pageUrl= tab.url;
     fetchInitialData();
@@ -29,7 +32,6 @@ var app = angular.module('nutri',['ngMaterial','ngMessages','angucomplete-alt'])
      getMeasureForSearch(params.description);
    }
 
-
  }
   $scope.remoteUrlRequestFn = (url)=>{
     console.log(url);
@@ -40,6 +42,50 @@ var app = angular.module('nutri',['ngMaterial','ngMessages','angucomplete-alt'])
     return $scope.searchList
   }
 
+  $scope.submit = function (params) {
+    const postData = {
+      'food_name': $scope.parsedData.recipe_name,
+      'ingr_list': [],
+      'measure': {
+          'measure_name': $scope.recipe.measure, 
+          'weight': $scope.recipe.weight,
+      }
+    }
+    $scope.parsedData.matched.forEach(item=>{
+
+      postData.ingr_list.push({
+        food_id: item.food_id,
+        measure_id:item.selectedMeasure,
+        quantity:parseFloat(item.quantity)
+      })
+    });
+    $http({
+      url: postRecipeUrl,
+      method:'POST',
+      data:postData
+    }).then(function(res){
+      const id = res.data.id;
+      console.log(id);
+      var a = document.createElement('a');
+      a.target = '_blank',
+      a.href=`${ip}recipe_tool/#/edit/${id}`
+      a.click();
+      a.remove();
+    })
+  }
+
+  $scope.isFormValid = function () {
+    var matched = $scope.parsedData.matched
+    for(var i=0;i<matched.length;i++){
+      if(!matched[i].selectedMeasure){
+        return false;
+      }
+      if(!matched[i].quantity){
+        return false
+      }
+    }
+    return true;
+  }
 
   function fetchInitialData(){
     $scope.mainLoader = true;
@@ -53,6 +99,17 @@ var app = angular.module('nutri',['ngMaterial','ngMessages','angucomplete-alt'])
       $scope.mainError = false;
       $scope.mainLoader = false;
       $scope.parsedData =res.data.processed_data;
+      $scope.parsedData.matched.forEach(item=>{
+        let qty= null;
+        try{
+          qty = eval(item.quantity)
+        }
+        catch(e){
+          qty = '';
+        }
+        item.originalQuantity = item.quantity;
+        item.quantity = qty;
+      })
       const searchrTerms_a = $scope.parsedData.matched.map(x=>x.food_name);
       const searchrTerms_b = $scope.parsedData.missing.map(x=>x.food_name);
       
