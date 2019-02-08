@@ -41,3 +41,22 @@ select {
   min-width: 100px;
   max-width: 100px;
 }
+.form-control {
+  font-size: 14px;
+  box-sizing: border-box;
+  border: 1px solid rgba(193, 191, 191, 0.87);
+  box-shadow: none;
+  outline: none;
+  background: transparent;
+  width: 100%;
+  padding: 0 15px;
+  line-height: 40px;
+  height: 40px;
+  color: rgba(0,0,0,0.87)
+}
+
+.highlight{
+  font-weight: bold;
+  color:white;
+  background-color: #525fa9;
+}

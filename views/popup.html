@@ -6,6 +6,7 @@
   </head>
   <body>
     <link rel="stylesheet" href="styles/angular-material.min.css">
+    <link rel="stylesheet" href="styles/angucomplete-alt.css">
     <link rel="stylesheet" href="styles/style.css">
     <link rel="stylesheet" href="styles/form-a.css">
     <div ng-app="nutri">
@@ -51,12 +52,24 @@
                                     </md-input-container>
                                 </td>
                                 <td>
-                                  <select name="measure_{{$index}}" 
+                                  <!-- <select name="measure_{{$index}}" 
                                     id="repeatSelect_{{$index}}" 
                                     ng-model="mat.selectedMeasure"
                                     ng-init="mat.selectedMeasure"  
                                     ng-options="option.id as option.MeasureName for option in mat.measuresAvaiable">          
-                                  </select>
+                                  </select> -->
+                                  <md-input-container>
+                                      <label>Measure</label>
+                                      <md-select required ng-model="mat.selectedMeasure" name="{{$index}}"">
+                                        <md-option><em>None</em></md-option>
+                                        <md-option ng-repeat="option in mat.measuresAvaiable" ng-value="option.id" >
+                                          {{option.MeasureName}}
+                                        </md-option>
+                                      </md-select>
+                                      <div ng-messages="recipeForm[$index].$error">
+                                          <div ng-message="required">This is required.</div>
+                                        </div>
+                                  </md-input-container>
                                   <br />
                                   <span ng-if="mat.measure_name" class="small-name">{{mat.measure_name}}</span>
                                 </td>
@@ -70,25 +83,18 @@
                           <md-subheader >
                             Add Ingredient
                           </md-subheader>
-                          <md-autocomplete
-                            md-no-cache="noCache"
-                            md-selected-item="selectedItemx"
-                            md-search-text-change="searchTextChangex(searchTextx)"
-                            md-search-text="searchTextx"
-                            md-selected-item-change="selectedItemChangex(selectedItemx)"
-                            md-items="item in searchList"
-                            md-item-text="item.label"
-                            md-min-length="0"
-                            placeholder="Add Ingredient (eg. Milk)"
-                            input-aria-labelledby="favoriteStateLabel"
-                            input-aria-describedby="autocompleteDetailedDescription">
-                            <md-item-template>
-                              <span md-highlight-text="searchTextx" md-highlight-flags="^i">{{item.label}}</span>
-                            </md-item-template>
-                            <md-not-found>
-                              No matching "{{searchTextx}}" were found.
-                            </md-not-found>
-                          </md-autocomplete>
+                          <div angucomplete-alt
+                            id="ex5"
+                            placeholder="Search Ingredient"
+                            pause="500"
+                            selected-object="selectedObject"
+                            remote-url="https://nutrilab.in/api/v1/master_food/ingr_search/?username=akhil%40healthifyme.com&exclude=R&api_key=b6b2d0b2fb99ce157f69059566548b0ff770d00e&search_term="
+                            remote-url-data-field="search_result"
+                            title-field="label"
+                            minlength="2"
+                            input-class="form-control form-control-small"
+                            match-class="highlight">
+                          </div>
                       </div>
                     </div>
                   </section>
@@ -145,6 +151,7 @@
     <script src="scripts/angular-aria.min.js"></script>
     <script src="scripts/angular-messages.min.js"></script>
     <script src="scripts/angular-material.min.js"></script>
+    <script src="scripts/angucomplete-alt.min.js"></script>
     <script src="scripts/popup.js"></script>
     <script src="scripts/unknown.js"></script>
   </body>

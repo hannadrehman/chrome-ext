@@ -1,19 +1,18 @@
-// const parseApiUrl = 'http://172.16.6.26/scrape';
-const parseApiUrl = 'http://localhost/nutri/parse';
-const measureUrl = (id)=>`https://nutrilab.in/api/v1/master_food/${id}/measures/?limit=100`;
-const foodSearchUrl = (q) => `https://nutrilab.in/api/v1/master_food/ingr_search/?username=akhil%40healthifyme.com&exclude=R&search_term=${q}&api_key=b6b2d0b2fb99ce157f69059566548b0ff770d00e`;
+
+const ip = 'http://172.16.6.26/';
+const parseApiUrl = ip+'api/v1/recipe-builder/scrape/';
+// const parseApiUrl = 'http://localhost/nutri/parse';
+// const parseApiUrl = 'https://add80281.ngrok.io/scrape';
+const measureUrl = (id)=>`${ip}api/v1/master_food/${id}/measures/?limit=100`;
+const foodSearchUrl = (q) => `${ip}api/v1/master_food/ingr_search/?username=akhil%40healthifyme.com&exclude=R&search_term=${q}&api_key=b6b2d0b2fb99ce157f69059566548b0ff770d00e`;
 const postRecipeUrl = '';
 
-var app = angular.module('nutri',['ngMaterial','ngMessages'])
+var app = angular.module('nutri',['ngMaterial','ngMessages','angucomplete-alt'])
 .controller('nutriCtr',function($scope,$http){
   $scope.pageUrl = window.location.href;
   $scope.parsedData = {}
   $scope.mainLoader =  false;
   $scope.mainError = false;
-
-  $scope.selectedItemx = '';
-  $scope.searchTextx = '';
-  $scope.searchList = []
 
   chrome.tabs.getSelected(null,function(tab) {
     $scope.pageUrl= tab.url;
@@ -23,13 +22,24 @@ var app = angular.module('nutri',['ngMaterial','ngMessages'])
     const itemIndex = $scope.parsedData.matched.findIndex(elem=>item.food_id === elem.food_id)
     $scope.parsedData.matched.splice(itemIndex,1);
   }
-  $scope.searchTextChangex = function (text) {
-    fetchSearch(text);
+
+ $scope.selectedObject = function (params) {
+   if(params){
+     $scope.selectedItemFromSearch = params;
+     getMeasureForSearch(params.description);
+   }
+
+
+ }
+  $scope.remoteUrlRequestFn = (url)=>{
+    console.log(url);
+    return url;
   }
-  $scope.selectedItemChangex = function(item){
-    $scope.selectedItemx = item;
-    getMeasureForSearch(item);
+
+  $scope.getItems = function name() {
+    return $scope.searchList
   }
+
 
   function fetchInitialData(){
     $scope.mainLoader = true;
@@ -81,7 +91,6 @@ var app = angular.module('nutri',['ngMaterial','ngMessages'])
       method:'GET',
     }).then(x=>{
       $scope.searchList = (x.data.search_result);
-      
     }).catch(x=>{
       console.log(x);
     })
@@ -106,6 +115,7 @@ var app = angular.module('nutri',['ngMaterial','ngMessages'])
           selectedMeasure:null
         });
         $scope.selectedItemx = {};
+        $scope.searchTextx = '';
       }).catch(e=>{
         item.measuresAvaiable = []
       })
