@@ -1,4 +1,4 @@
-const createIngUrl = ip+'api/v1/recipe-builder/ingredients/';
+const createIngUrl = ip + "api/v1/recipe-builder/ingredients/";
 
 app.directive("formA", function($http) {
   return {
@@ -203,12 +203,18 @@ app.directive("formA", function($http) {
           data: postData
         })
           .then(res => {
-            console.log("res: ", res);
+            console.log("res: ", res.data.id);
             scope.ingredientName = "";
             scope.nutrientsList = [];
             scope.measuresList = [];
+            var callBackData = {
+              id: res.data.id,
+              label: name,
+            };
+            scope.addedNewIngrededient(callBackData);
           })
           .catch(e => {
+            alert("Something went wrong");
             console.log("e: ", e);
           });
       }
