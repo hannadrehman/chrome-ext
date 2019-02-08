@@ -2,7 +2,8 @@ body {
   width: 700px !important;
   position: relative !important;
   height: 700px;
-  color: rgba(0,0,0,0.87)
+  color: rgba(0,0,0,0.87);
+  padding: 0 10px;
 }
 
 .table {
@@ -61,10 +62,50 @@ select {
 }
 
 .highlight{
-  font-weight: bold;
   color:white;
   background-color: #525fa9;
 }
 .sm-mar {
 
+}
+.exising ul li a {
+  font-weight: bold;
+  text-decoration: none;
+}
+.exising a:hover{
+  color:blue;
+}
+.headers {
+  background: rgb(63,81,181);
+  padding: 12px 12px;
+  color: white;
+}
+.tbl-head {
+  background-color: #e8e5e5;
+  height: 40px;
+  color: #5a5959;
+}
+.bolder {
+  font-weight: bold;
+  color: #4c4a4a;
+  margin-left: -10px;
+}
+.alertyy {
+  padding: 10px 0px;
+  background-color: #f3f3aa;
+  border: 1px solid #e8a8a8;
+  border-radius: 10px;
+  color: #e8a8a8 ;
+}
+.alertyy a {
+  color: #ec8686 !important;
+}
+.alert-title {
+  padding: 5px 24px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #e45959;
+}
+.alert-title:hover{
+  color:red;
 }

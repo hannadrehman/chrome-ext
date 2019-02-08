@@ -15,19 +15,32 @@
           <md-content>
             <md-tabs class="md-primary" md-left-tabs style="height:700px" md-selected="selectedTab">
               <md-tab label="Recipe" >
-                <md-content class="md-padding">
+                <md-content >
                   <h3 class="md-display-1">Add a new Recipe</h3>
                   <section ng-if="!mainLoader && !mainError">
+                      <section ng-if="parsedData.existing.length>0" class="exising alertyy">
+                        <div class="alert-title">
+                            Similar Recipes found in nutrilab
+                        </div>
+                        <ul>
+                          <li ng-repeat="item in parsedData.existing">
+                            <a href="{{ip}}recipe_tool/#/edit/{{item.id}}" target="_blank">{{item.Name}}</a>
+                          </li>
+                        </ul>
+                      </section>
+                      <br/>
+                   <br/>
                     <div ng-if="parsedData.matched">
                       <form name="recipeForm">
                         <md-input-container class="md-block">
-                            <label>found</label>
+                            <label>Recepie Name</label>
                             <input required md-no-asterisk name="recipeName" ng-model="parsedData.recipe_name">
                             <div ng-messages="recipeForm.recipeName.$error">
                               <div ng-message="required">This is required.</div>
                               <div ng-message="md-maxlength">The description must be less than 30 characters long.</div>
                             </div>
                           </md-input-container>
+                   
                           <section>
                               <table class=".table alter--table">
                                 <tr>
@@ -52,12 +65,13 @@
                                 </tr>
                               </table>
                             </section>
-                          <h2>Matched Ingredients</h2>
+                          <h2 class="headers">Matched Ingredients</h2>
                           <table class="table alter--table">
-                              <tr>
+                              <tr class="tbl-head">
                                 <th>Name</th>
                                 <th>Quantity</th>
                                 <th>Measure</th>
+                                <th></th>
                               </tr>
                               <tr ng-repeat="mat in parsedData.matched">
                                 <td>
@@ -100,8 +114,10 @@
                           <md-button ng-disabled="!isFormValid()" class="md-primary md-raised" ng-click="submit()">Submit Food</md-button>
                         </form>
                         <div>
-                          <md-subheader >
-                            Add Ingredient
+                          <md-subheader>
+                            <span  class="bolder">
+                              Add Ingredient
+                            </span>
                           </md-subheader>
                           <div angucomplete-alt
                             id="ex5"
@@ -120,10 +136,12 @@
                   </section>
 
                   <section ng-if="!mainLoader && !mainError">
-                    <h2>Unmatched Ingredients</h2>
+                    <br>
+                    <br>
+                    <h2 class="headers">Unmatched Ingredients</h2>
                     <div ng-if="parsedData.missing" >
                       <table class="table alter--table">
-                        <tr>
+                        <tr class="tbl-head">
                           <th>Name</th>
                           <th>Quantity</th>
                           <th>Measure</th>
@@ -153,12 +171,12 @@
                       <img src="https://www.demilked.com/magazine/wp-content/uploads/2016/06/gif-animations-replace-loading-screen-14.gif" width="100%" />
                     </section>
                     <section ng-if="mainError">
-                        <img src="https://weirdomatic.com/wp-content/pictures/2009/12/funny-500-error.gif" width="100%" />
+                        <img src="{{errSrc}}" width="100%" />
                   </section>
                 </md-content>
               </md-tab>
               <md-tab label="Create Ingredient">
-                <md-content class="md-padding">
+                <md-content >
                   <h2 class="md-display-1">Create a Custom Ingredient</h2>
                   <form-a added-new-ingrededient="getNewFoodFromForm"></form-a>
                 </md-content>

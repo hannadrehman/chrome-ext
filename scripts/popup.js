@@ -31,7 +31,10 @@ var app = angular.module('nutri',['ngMaterial','ngMessages','angucomplete-alt'])
     const itemIndex = $scope.parsedData.matched.findIndex(elem=>item.food_id === elem.food_id)
     $scope.parsedData.matched.splice(itemIndex,1);
   }
-
+  var errorsImages = [
+    'https://weirdomatic.com/wp-content/pictures/2009/12/funny-500-error.gif'
+  ]
+$scope.errSrc=errorsImages[0];
  $scope.selectedObject = function (params) {
    if(params){
      $scope.selectedItemFromSearch = params;
@@ -135,6 +138,11 @@ var app = angular.module('nutri',['ngMaterial','ngMessages','angucomplete-alt'])
     }).catch(e=>{
       $scope.mainLoader = false;
       $scope.mainError = true;
+      if(e && e.status === 500){
+        $scope.errSrc=errorsImages[0]
+      } else {
+        
+      }
     })
   }
 
