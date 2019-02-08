@@ -13,7 +13,7 @@
       <div ng-controller="nutriCtr">
         <div ng-cloak>
           <md-content>
-            <md-tabs class="md-primary" md-left-tabs style="height:700px">
+            <md-tabs class="md-primary" md-left-tabs style="height:700px" md-selected="selectedTab">
               <md-tab label="Recipe" >
                 <md-content class="md-padding">
                   <h3 class="md-display-1">Add a new Recipe</h3>
@@ -21,7 +21,7 @@
                     <div ng-if="parsedData.matched">
                       <form name="recipeForm">
                         <md-input-container class="md-block">
-                            <label>Recipe Name</label>
+                            <label>found</label>
                             <input md-maxlength="30" required md-no-asterisk name="recipeName" ng-model="parsedData.recipe_name">
                             <div ng-messages="recipeForm.recipeName.$error">
                               <div ng-message="required">This is required.</div>
@@ -159,7 +159,7 @@
               <md-tab label="Custom Ingredient">
                 <md-content class="md-padding">
                   <h2 class="md-display-1">Create a Custom Ingredient</h2>
-                  <form-a addedNewIngrededient="getNewFoodFromForm"></form-a>
+                  <form-a added-new-ingrededient="getNewFoodFromForm"></form-a>
                 </md-content>
               </md-tab>
             </md-tabs>

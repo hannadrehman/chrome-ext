@@ -4,6 +4,9 @@ app.directive("formA", function($http) {
   return {
     restrict: "E",
     templateUrl: "../views/unknown.html",
+    scope:{
+      addedNewIngrededient: '='
+    },
     link: function(scope, elem, attrs) {
       var allNutrients = [
         { name: "AlphaLinolenicAcid18isto3", unit: "gms", value: 0 },
@@ -84,7 +87,7 @@ app.directive("formA", function($http) {
       var self = scope;
       scope.ingredientName = "";
       scope.nutrientsList = [];
-      scope.measuresList = [];
+      scope.measuresList = [{}];
       scope.addIngredientNames = addIngredientNames;
       scope.removeNutrients = removeNutrients;
       scope.submitIngredient = submitIngredient;
@@ -206,7 +209,7 @@ app.directive("formA", function($http) {
             console.log("res: ", res.data.id);
             scope.ingredientName = "";
             scope.nutrientsList = [];
-            scope.measuresList = [];
+            scope.measuresList = [{}];
             var callBackData = {
               id: res.data.id,
               label: name,

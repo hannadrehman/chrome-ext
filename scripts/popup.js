@@ -17,6 +17,7 @@ var app = angular.module('nutri',['ngMaterial','ngMessages','angucomplete-alt'])
     measure:'Serve',
     weight:1,
   }
+  $scope.selectedTab = 0;
   chrome.tabs.getSelected(null,function(tab) {
     $scope.pageUrl= tab.url;
     fetchInitialData();
@@ -87,8 +88,9 @@ var app = angular.module('nutri',['ngMaterial','ngMessages','angucomplete-alt'])
     return true;
   }
   $scope.getNewFoodFromForm = function (params) {
-    if(param){
+    if(params){
       getMeasureForSearch(params);
+      $scope.selectedTab = 0;
     }
   }
 
