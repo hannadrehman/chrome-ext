@@ -1,27 +1,21 @@
 <div layout="column" ng-cloak class="md-inline-form">
-  <md-content layout-gt-sm="row" layout-padding class="ingredient-names-header">
+  <!-- <md-content layout-gt-sm="row" layout-padding class="ingredient-names-header">
     <md-subheader class="md-accent">Ingredient Names</md-subheader>
-  </md-content>
-  <md-content layout-gt-sm="row" layout-padding>
-    <div class="ingredient-names-wrap">
-      <md-input-container class="width-50" ng-repeat="n in ingredientNames">
-        <label>Ingredient Name {{ $index + 1 }}</label>
-        <input ng-model="ingredientNames[$index].name" />
+  </md-content> -->
+  <!-- <md-content layout-gt-sm="row" layout-padding>
+    <div class="ingredient-names-wrap"> -->
+      <md-input-container class="width-50">
+        <label>Ingredient Name</label>
+        <input ng-model="ingredientName" />
       </md-input-container>
-    </div>
-  </md-content>
-  <md-button class="md-primary md-raised" ng-click="addIngredientNames()"
+    <!-- </div>
+  </md-content> -->
+  <!-- <md-button class="md-primary md-raised" ng-click="addIngredientNames()"
     >Add Ingredient Names</md-button
-  >
-  <md-content layout-gt-sm="row" layout-padding class="ingredient-names-header">
-    <md-subheader class="md-secondary"
-      >The weight for which nutrient info is known</md-subheader
-    >
-    <md-input-container>
-      <label>Weight</label>
-      <input ng-model="ingredientNames[$index]" />
-    </md-input-container>
-  </md-content>
+  > -->
+  <md-subheader class="md-secondary"
+  >Enter nutrient info for 100g of {{ingredientName}}</md-subheader
+>
   <md-content layout-gt-sm="row" layout-padding class="ingredient-names-header">
     <md-subheader class="md-accent">Nutrients</md-subheader>
   </md-content>
@@ -105,6 +99,6 @@
     >Add Measures</md-button
   >
   <md-button class="md-accent md-raised" ng-click="submitIngredient()"
-  >Add Ingredient</md-button
+  >Submit Ingredient</md-button
 >
 </div>

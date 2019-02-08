@@ -1,4 +1,6 @@
-app.directive("formA", function() {
+const createIngUrl = "";
+
+app.directive("formA", function($http) {
   return {
     restrict: "E",
     templateUrl: "../views/unknown.html",
@@ -80,7 +82,7 @@ app.directive("formA", function() {
         { name: "Sugar", unit: "gms", value: 0 }
       ];
       var self = scope;
-      scope.ingredientNames = [{}];
+      scope.ingredientName = "";
       scope.nutrientsList = [];
       scope.measuresList = [];
       scope.addIngredientNames = addIngredientNames;
@@ -152,8 +154,8 @@ app.directive("formA", function() {
         return allNutrients.map(function(nutrient) {
           return {
             value: nutrient.name,
-            name: nutrient.name + '('+ nutrient.unit + ')',
-            unit: nutrient.unit,
+            name: nutrient.name + "(" + nutrient.unit + ")",
+            unit: nutrient.unit
           };
         });
       }
@@ -163,7 +165,7 @@ app.directive("formA", function() {
       function createFilterFor(query) {
         var lowercaseQuery = query.toLowerCase();
         return function filterFn(state) {
-          return state.value.toLowerCase().indexOf(lowercaseQuery) > -1 ;
+          return state.value.toLowerCase().indexOf(lowercaseQuery) > -1;
         };
       }
       function addIngredientNames() {
@@ -179,7 +181,36 @@ app.directive("formA", function() {
         scope.measuresList.splice(measuresIndex, 1);
       }
       function submitIngredient() {
-        
+        var name = scope.ingredientName;
+        var nutrients = {};
+        scope.nutrientsList.forEach(element => {
+          nutrients[element.nutrient] = element.units;
+        });
+        var measures = scope.measuresList.map(measure => ({
+          name: measure.measure_name,
+          weight_in_gms: measure.measure_weight,
+          rank: measure.measure_rank
+        }));
+        var postData = {
+          name,
+          measures,
+          nutrients
+        };
+        console.log("postData: ", postData);
+        $http({
+          url: createIngUrl,
+          method: "POST",
+          data: postData
+        })
+          .then(res => {
+            console.log("res: ", res);
+            scope.ingredientName = "";
+            scope.nutrientsList = [];
+            scope.measuresList = [];
+          })
+          .catch(e => {
+            console.log("e: ", e);
+          });
       }
     }
   };
