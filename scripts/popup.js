@@ -1,14 +1,19 @@
-
 const ip = 'http://172.16.6.26/';
-const parseApiUrl = ip+'api/v1/recipe-builder/scrape/';
-// const parseApiUrl = 'http://localhost/nutri/parse';
-// const parseApiUrl = 'https://add80281.ngrok.io/scrape';
-const measureUrl = (id)=>`${ip}api/v1/master_food/${id}/measures/?limit=100`;
-const foodSearchUrl = (q) => `${ip}api/v1/master_food/ingr_search/?username=akhil%40healthifyme.com&exclude=R&search_term=${q}&api_key=b6b2d0b2fb99ce157f69059566548b0ff770d00e`;
-const postRecipeUrl = ip+'api/v1/recipe-builder/recipe/';
+
 
 var app = angular.module('nutri',['ngMaterial','ngMessages','angucomplete-alt'])
 .controller('nutriCtr',function($scope,$http){
+  $scope.ip = ip
+
+  $scope.us = 'admin@caeruz.com';
+  $scope.apik = '596611c6eaa9bec6887ca02fc75798472c22cb70'
+  const parseApiUrl = ip+'api/v1/recipe-builder/scrape/';
+  // const parseApiUrl = 'http://localhost/nutri/parse';
+  // const parseApiUrl = 'https://add80281.ngrok.io/scrape';
+  const measureUrl = (id)=>`${ip}api/v1/master_food/${id}/measures/?limit=100`;
+  const foodSearchUrl = (q) => `${ip}api/v1/master_food/ingr_search/?username=akhil%40healthifyme.com&exclude=R&search_term=${q}&api_key=b6b2d0b2fb99ce157f69059566548b0ff770d00e`;
+  const postRecipeUrl = ip+'api/v1/recipe-builder/recipe/';
+
   $scope.pageUrl = window.location.href;
   $scope.parsedData = {}
   $scope.mainLoader =  false;
@@ -94,7 +99,7 @@ var app = angular.module('nutri',['ngMaterial','ngMessages','angucomplete-alt'])
     }
   }
   $scope.goToTab2 = function () {
-  $scope.selectedTab = 1;    
+  $scope.selectedTab = 1;     
   }
 
   function fetchInitialData(){
