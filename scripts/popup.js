@@ -86,6 +86,11 @@ var app = angular.module('nutri',['ngMaterial','ngMessages','angucomplete-alt'])
     }
     return true;
   }
+  $scope.getNewFoodFromForm = function (params) {
+    if(param){
+      getMeasureForSearch(params);
+    }
+  }
 
   function fetchInitialData(){
     $scope.mainLoader = true;
@@ -168,11 +173,9 @@ var app = angular.module('nutri',['ngMaterial','ngMessages','angucomplete-alt'])
           measure_id:null,
           measure_name:null,
           measuresAvaiable:item.measuresAvaiable,
-          quantity:0,
+          quantity:'',
           selectedMeasure:null
         });
-        $scope.selectedItemx = {};
-        $scope.searchTextx = '';
       }).catch(e=>{
         item.measuresAvaiable = []
       })
