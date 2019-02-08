@@ -22,7 +22,7 @@
                       <form name="recipeForm">
                         <md-input-container class="md-block">
                             <label>found</label>
-                            <input md-maxlength="30" required md-no-asterisk name="recipeName" ng-model="parsedData.recipe_name">
+                            <input required md-no-asterisk name="recipeName" ng-model="parsedData.recipe_name">
                             <div ng-messages="recipeForm.recipeName.$error">
                               <div ng-message="required">This is required.</div>
                               <div ng-message="md-maxlength">The description must be less than 30 characters long.</div>
@@ -64,7 +64,7 @@
                                     <md-subheader >
                                         {{mat.matched_food_name}}
                                     </md-subheader>
-                                    <span class="small-name">Recipe Name : {{mat.food_name}}</span>
+                                    <span class="small-name">found: {{mat.food_name}}</span>
                                 </td>
                                 <td>
                                   <md-input-container class="md-block" style="width:100px">
@@ -73,7 +73,7 @@
                                       <div ng-messages="recipeForm[$index].$error">
                                         <div ng-message="required">This is required.</div>
                                       </div>
-                                      <span class="small-name sm-mar">found: {{mat.originalQuantity}}</span>
+                                      <span ng-if="mat.originalQuantity" class="small-name sm-mar">found: {{mat.originalQuantity}}</span>
                                     </md-input-container>
                                 </td>
                                 <td>
@@ -147,6 +147,7 @@
                         </tr>
                       </table>
                     </div>
+                    <md-button ng-if="parsedData.missing.length" class="md-primary md-raised" ng-click="goToTab2()">Create Ingredient</md-button>
                   </section>
                   <section ng-if="mainLoader">
                       <img src="https://www.demilked.com/magazine/wp-content/uploads/2016/06/gif-animations-replace-loading-screen-14.gif" width="100%" />
@@ -156,7 +157,7 @@
                   </section>
                 </md-content>
               </md-tab>
-              <md-tab label="Custom Ingredient">
+              <md-tab label="Create Ingredient">
                 <md-content class="md-padding">
                   <h2 class="md-display-1">Create a Custom Ingredient</h2>
                   <form-a added-new-ingrededient="getNewFoodFromForm"></form-a>

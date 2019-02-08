@@ -93,6 +93,9 @@ var app = angular.module('nutri',['ngMaterial','ngMessages','angucomplete-alt'])
       $scope.selectedTab = 0;
     }
   }
+  $scope.goToTab2 = function () {
+  $scope.selectedTab = 1;    
+  }
 
   function fetchInitialData(){
     $scope.mainLoader = true;
