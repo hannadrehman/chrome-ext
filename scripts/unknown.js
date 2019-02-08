@@ -1,4 +1,4 @@
-const createIngUrl = "";
+const createIngUrl = ip+'api/v1/recipe-builder/ingredients/';
 
 app.directive("formA", function($http) {
   return {
